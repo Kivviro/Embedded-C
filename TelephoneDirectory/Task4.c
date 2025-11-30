@@ -2,63 +2,15 @@
 
 #define CUSTOMER_ARRAY_LENGTH 100
 
-// Start "functions for work with strings" area --
-void ReadString(char *buf, int size)
-{
-    int c;
-    int i = 0;
+void ReadString();
+int IsDigitsOnly();
+int SubstringFounder();
 
-    while ((c = getchar()) == '\n');
-
-    if (c == EOF)
-    {
-        buf[0] = '\0';
-        return;
-    }
-
-    buf[i++] = (char)c;
-
-    while (i < size - 1 && (c = getchar()) != '\n' && c != EOF)
-        buf[i++] = (char)c;
-
-
-    buf[i] = '\0';
-
-    if (c != '\n' && c != EOF)
-        while ((c = getchar()) != '\n' && c != EOF);
-}
-
-int IsDigitsOnly(const char *s)
-{
-    int i = 0;
-
-    while (s[i] != '\0')
-    {
-        if (s[i] < '0' || s[i] > '9')
-            return 0;
-        i++;
-    }
-
-    return 1;
-}
-
-int SubstringFounder(const char *str, const char *substr)
-{
-    if (!substr[0])
-        return 1;
-
-    for (int i = 0; str[i] != '\0'; i++)
-    {
-        int j = 0;
-        while (substr[j] != '\0' && str[i + j] != '\0' && str[i + j] == substr[j])
-            j++;
-
-        if (substr[j] == '\0')
-            return 1;
-    }
-    return 0;
-}
-// -- end "functions for work with strings" area
+void PrintCustomer();
+void AddCustomer();
+void DeleteCustomer();
+void SearchCustomers();
+void OutputAllCustomers();
 
 struct customer
 {
@@ -66,6 +18,52 @@ struct customer
     char secondName[20];
     char tel[11];
 };
+
+int main()
+{
+    int choice;
+    struct customer customers[CUSTOMER_ARRAY_LENGTH] = {0};
+
+    while (1)
+    {
+        printf("\nМеню:\n");
+        printf("1. Добавить абонента\n");
+        printf("2. Удалить абонента\n");
+        printf("3. Поиск абонента по ключевым символам\n");
+        printf("4. Вывод всех записей\n");
+        printf("5. Выход\n");
+        printf("Выбор: ");
+
+        char line[16];
+        ReadString(line, sizeof(line));
+        if (sscanf(line, "%d", &choice) != 1)
+        {
+            printf("Некорректный ввод.\n");
+            continue;
+        }
+
+        switch (choice)
+        {
+            case 1:
+                AddCustomer(customers);
+                break;
+            case 2:
+                DeleteCustomer(customers);
+                break;
+            case 3:
+                SearchCustomers(customers);
+                break;
+            case 4:
+                OutputAllCustomers(customers);
+                break;
+            case 5:
+                return 0;
+
+            default:
+                printf("Недоступный выбор.\n");
+        }
+    }
+}
 
 void PrintCustomer(int index, struct customer *cptr)
 {
@@ -160,48 +158,59 @@ void OutputAllCustomers(struct customer _customers[])
         PrintCustomer(i, &_customers[i]);
 }
 
-int main()
+// Functions for work with strings
+void ReadString(char *buf, int size)
 {
-    int choice;
-    struct customer customers[CUSTOMER_ARRAY_LENGTH] = {0};
+    int c;
+    int i = 0;
 
-    while (1)
+    while ((c = getchar()) == '\n');
+
+    if (c == EOF)
     {
-        printf("\nМеню:\n");
-        printf("1. Добавить абонента\n");
-        printf("2. Удалить абонента\n");
-        printf("3. Поиск абонента по ключевым символам\n");
-        printf("4. Вывод всех записей\n");
-        printf("5. Выход\n");
-        printf("Выбор: ");
-
-        char line[16];
-        ReadString(line, sizeof(line));
-        if (sscanf(line, "%d", &choice) != 1)
-        {
-            printf("Некорректный ввод.\n");
-            continue;
-        }
-
-        switch (choice)
-        {
-            case 1:
-                AddCustomer(customers);
-                break;
-            case 2:
-                DeleteCustomer(customers);
-                break;
-            case 3:
-                SearchCustomers(customers);
-                break;
-            case 4:
-                OutputAllCustomers(customers);
-                break;
-            case 5:
-                return 0;
-
-            default:
-                printf("Недоступный выбор.\n");
-        }
+        buf[0] = '\0';
+        return;
     }
+
+    buf[i++] = (char)c;
+
+    while (i < size - 1 && (c = getchar()) != '\n' && c != EOF)
+        buf[i++] = (char)c;
+
+
+    buf[i] = '\0';
+
+    if (c != '\n' && c != EOF)
+        while ((c = getchar()) != '\n' && c != EOF);
+}
+
+int IsDigitsOnly(const char *s)
+{
+    int i = 0;
+
+    while (s[i] != '\0')
+    {
+        if (s[i] < '0' || s[i] > '9')
+            return 0;
+        i++;
+    }
+
+    return 1;
+}
+
+int SubstringFounder(const char *str, const char *substr)
+{
+    if (!substr[0])
+        return 1;
+
+    for (int i = 0; str[i] != '\0'; i++)
+    {
+        int j = 0;
+        while (substr[j] != '\0' && str[i + j] != '\0' && str[i + j] == substr[j])
+            j++;
+
+        if (substr[j] == '\0')
+            return 1;
+    }
+    return 0;
 }
