@@ -92,7 +92,7 @@ void AddCustomer(struct customer **head)
     if (newNode == NULL)
     {
         fprintf(stderr, "malloc failed!\n");
-        exit(EXIT_FAILURE);
+        return;
     }
 
     printf("Введите имя: ");
