@@ -1,0 +1,1 @@
+/usr/bin/cc -fPIC -shared -Wl,-soname,liblib.so -o liblib.so CMakeFiles/lib.dir/add.c.o CMakeFiles/lib.dir/sub.c.o CMakeFiles/lib.dir/mul.c.o CMakeFiles/lib.dir/div.c.o 
