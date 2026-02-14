@@ -1,1 +1,0 @@
-/usr/bin/cc CMakeFiles/supercalc-3000.dir/main.c.o -o supercalc-3000  ../lib/liblib.a 

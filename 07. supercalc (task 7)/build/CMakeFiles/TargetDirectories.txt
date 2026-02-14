@@ -1,8 +1,0 @@
-/home/kivvi/prog/supercalc/build/CMakeFiles/edit_cache.dir
-/home/kivvi/prog/supercalc/build/CMakeFiles/rebuild_cache.dir
-/home/kivvi/prog/supercalc/build/lib/CMakeFiles/lib.dir
-/home/kivvi/prog/supercalc/build/lib/CMakeFiles/edit_cache.dir
-/home/kivvi/prog/supercalc/build/lib/CMakeFiles/rebuild_cache.dir
-/home/kivvi/prog/supercalc/build/src/CMakeFiles/supercalc-3000.dir
-/home/kivvi/prog/supercalc/build/src/CMakeFiles/edit_cache.dir
-/home/kivvi/prog/supercalc/build/src/CMakeFiles/rebuild_cache.dir
