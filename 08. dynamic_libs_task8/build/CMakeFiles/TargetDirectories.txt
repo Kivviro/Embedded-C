@@ -1,0 +1,8 @@
+/home/kivvi/Documents/prog/08. task8/build/CMakeFiles/edit_cache.dir
+/home/kivvi/Documents/prog/08. task8/build/CMakeFiles/rebuild_cache.dir
+/home/kivvi/Documents/prog/08. task8/build/lib/CMakeFiles/lib.dir
+/home/kivvi/Documents/prog/08. task8/build/lib/CMakeFiles/edit_cache.dir
+/home/kivvi/Documents/prog/08. task8/build/lib/CMakeFiles/rebuild_cache.dir
+/home/kivvi/Documents/prog/08. task8/build/src/CMakeFiles/supercalc-3000.dir
+/home/kivvi/Documents/prog/08. task8/build/src/CMakeFiles/edit_cache.dir
+/home/kivvi/Documents/prog/08. task8/build/src/CMakeFiles/rebuild_cache.dir
