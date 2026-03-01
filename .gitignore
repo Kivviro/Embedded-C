@@ -1,0 +1,19 @@
+# Build directory
+build/
+bin/
+
+# Exec
+*.out
+
+# Object files
+*.o
+
+# Static libs
+*.a
+
+# Dynamic libs
+*.so
+
+# Temp files
+*.log
+*.d
