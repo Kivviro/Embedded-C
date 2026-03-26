@@ -12,7 +12,6 @@ int main()
 {
     srand(time(NULL));
 
-    // инициализация ларьков
     for (int i = 0; i < KIOSKS; i++) 
     {
         kiosks[i].goods = 900 + rand() % 201;
@@ -22,7 +21,6 @@ int main()
     pthread_t buyers[BUYERS];
     pthread_t worker;
 
-    // создание покупателей
     for (int i = 0; i < BUYERS; i++) 
     {
         int* id = malloc(sizeof(int));
@@ -30,16 +28,13 @@ int main()
         pthread_create(&buyers[i], NULL, buyer_thread, id);
     }
 
-    // создание погрузчика
     pthread_create(&worker, NULL, worker_thread, NULL);
 
-    // Ждём покупателей
     for (int i = 0; i < BUYERS; i++) 
     {
         pthread_join(buyers[i], NULL);
     }
 
-    // После завершения покупателей
     pthread_cancel(worker);
     pthread_join(worker, NULL);
 
