@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=
+CFLAGS= -std=c11
 
 SRC_DIR := src
 OBJ_DIR := build
