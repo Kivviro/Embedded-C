@@ -1,9 +1,9 @@
 CC = gcc
 CFLAGS = -std=c17 -D_POSIX_C_SOURCE=200809L
 
-PROGS = block_sigint event_loop override_usr1 sender
+TARGETS = block_sigint event_loop override_usr1 sender
 
-all: $(PROGS)
+all: $(TARGETS)
 
 block_sigint: block_sigint.c
 	$(CC) $(CFLAGS) -o $@ $<
@@ -18,6 +18,6 @@ sender: sender.c
 	$(CC) $(CFLAGS) -o $@ $<
 
 clean:
-	-rm -f $(PROGS)
+	-rm -f $(TARGETS)
 
 .PHONY: all clean
