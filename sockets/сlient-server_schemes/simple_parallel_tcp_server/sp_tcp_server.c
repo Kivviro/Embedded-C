@@ -7,11 +7,19 @@
 #include <sys/types.h>
 #include <netinet/in.h>
 #include <signal.h>
+#include <time.h>
 
 #define LISTENER_PORT 8080
 #define BACKLOG 5
 
-void service_process(int service_id, int server_fd)
+static void get_time(char *buf, size_t size)
+{
+    time_t t = time(NULL);
+    struct tm tm = *localtime(&t);
+    strftime(buf, size, "%Y-%m-%d %H:%M:%S\n", &tm);
+}
+
+void service_process(int server_fd)
 {
     listen(server_fd, 1);
 
@@ -20,29 +28,26 @@ void service_process(int service_id, int server_fd)
     getsockname(server_fd, (struct sockaddr*)&addr, &len);
     int service_port = ntohs(addr.sin_port);
 
-    printf("Service_%d started on port %d\n", service_id, service_port);
+    printf("Service_%d started on port %d\n", service_port, service_port);
 
     int client_fd = accept(server_fd, NULL, NULL);
 
     char buf[1024];
 
-    while(1)
+    ssize_t bytes = read(client_fd, buf, sizeof(buf) - 1);
+
+    if (bytes > 0)
     {
-        ssize_t bytes = read(client_fd, buf, sizeof(buf) - 1);
-
-        if (bytes <= 0 || strncmp(buf, "/exit", 5) == 0)
-        {
-            printf("Service_%d is terminating...\n", service_id);
-            break;
-        }
-        
         buf[bytes] = '\0';
+        printf("Service_%d received request\n", service_port);
 
-        printf("Service_%d has received: %s", service_id, buf);
-        
-        char *response = "Message delivered\n";
-        write(client_fd, response, strlen(response));
+        char time_buf[128];
+        get_time(time_buf, sizeof(time_buf));
+
+        write(client_fd, time_buf, strlen(time_buf));
     }
+
+    printf("Service_%d is terminating...\n", service_port);
 
     close(client_fd);
     close(server_fd);
@@ -68,12 +73,9 @@ int main()
 
     printf("Listener started on port %d\n", LISTENER_PORT);
 
-    int service_id = 0;
-
     while(1)
     {
         int client_fd = accept(listener_fd, NULL, NULL);
-        service_id++;
         pid_t pid = fork();
 
         if (pid == 0)
@@ -98,7 +100,7 @@ int main()
 
             write(client_fd, &service_port, sizeof(service_port));
 
-            service_process(service_id, service_fd);
+            service_process(service_fd);
         }
 
         close(client_fd);        

@@ -1,4 +1,3 @@
-// client.c
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -32,33 +31,23 @@ int main()
 
     close(listener_fd);
 
-    printf("Received service port: %d. Type '/exit' to exit\n", service_port);
+    printf("Received service port: %d.\n", service_port);
 
     int service_fd = connect_to_port(service_port);
 
     char buf[1024];
 
-    while(1)
+    char *request = "time\n";
+    write(service_fd, request, strlen(request));
+
+    ssize_t bytes = read(service_fd, buf, sizeof(buf) - 1);
+
+    if (bytes > 0)
     {
-        printf("> ");
-        fgets(buf, sizeof(buf), stdin);
-
-        if (strncmp(buf, "/exit", 5) == 0)
-        {
-            write(service_fd, buf, strlen(buf));
-            break;
-        }
-        
-        write(service_fd, buf, strlen(buf));
-
-        ssize_t bytes = read(service_fd, buf, sizeof(buf) - 1);
-
-        if (bytes > 0)
-        {
-            buf[bytes] = '\0';
-            printf("%s", buf);
-        }
+        buf[bytes] = '\0';
+        printf("Server time: %s", buf);
     }
+
     close(service_fd);
     return 0;
 }
