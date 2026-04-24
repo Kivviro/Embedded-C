@@ -1,4 +1,3 @@
-# makefile для базовых сокето
 CC = gcc
 CFLAGS = -std=c17
 
